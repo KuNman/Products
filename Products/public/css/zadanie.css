@@ -1,8 +1,36 @@
-.list-group {
-    margin-top: 5%;
-}
-
 .header {
     text-align: center;
     margin-top: 5%;
+    margin-bottom: 5%;
 }
+
+.list-group {
+    width: 30%;
+    margin: 0 auto;
+}
+
+.list-group-item.active, .list-group a div {
+    text-align: center;
+    display: block;
+}
+
+.list-group-item:hover {
+    background: darkgray;
+}
+
+.add.new {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.add.new .btn-success {
+    display: flex;
+    justify-content: center;
+    flex: 0 0 20%;
+    max-width: 20%;
+    cursor:pointer;
+}
+
+

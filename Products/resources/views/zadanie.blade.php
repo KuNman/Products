@@ -9,14 +9,31 @@
 </head>
 
 <body>
-<div class="header">Zadanie rekrutacyjne dla MyLead, 27.01.2018, JN.</div>
+<div class="header">Zadanie rekrutacyjne dla MyLead, 27.01.2018, knejman56@gmail.com.</div>
+@if (!empty($names))
 <div class="list-group">
-    <div class="list-group-item active">Cras justo odio</div>
-    <div class="list-group-item list-group-item-action>">Dapibus ac facilisis in</div>
-    <div class="list-group-item list-group-item-action>">Dapibus ac facilisis in</div>
-    <div class="list-group-item list-group-item-action>">Dapibus ac facilisis in</div>
-    {{name}};
+    <div class="list-group-item active">All products</div>
+    @foreach ($names as $name)
+        <a href="#" style="text-decoration: none"><div class="list-group-item">{{ $name  }} </div></a>
+    @endforeach
 </div>
+<a href="/zadanie/add" style="text-decoration: none;"><div class="add new"><button type="button" class="btn btn-success">New product</button></div></a>
+@endif
+
+@if(!empty($add))
+    <div class="form-group row">
+        <label for="example-text-input" class="col-2 col-form-label">Text</label>
+        <div class="col-10">
+            <input class="form-control" type="text" value="Artisanal kale" id="example-text-input">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="example-search-input" class="col-2 col-form-label">Search</label>
+        <div class="col-10">
+            <input class="form-control" type="search" value="How do I shoot web" id="example-search-input">
+        </div>
+    </div>
+@endif
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
