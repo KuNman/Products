@@ -10,15 +10,58 @@
 
 <body>
 <div class="header">Zadanie rekrutacyjne dla MyLead, 27.01.2018, knejman56@gmail.com.</div>
-
 @if (!empty($names))
 <div class="list-group">
     <div class="list-group-item active">All products</div>
     @foreach ($names as $name)
-        <a href="#" style="text-decoration: none"><div class="list-group-item">{{ $name }} </div></a>
+        <a href="#" style="text-decoration: none"><div data-toggle="modal" data-target="#myModal" class="list-group-item">{{ $name }}</div></a>
     @endforeach
 </div>
 <a href="/zadanie/add" style="text-decoration: none;"><div class="add new"><button type="button" class="btn btn-success">New product</button></div></a>
+<div id="myModal" class="modal fade" role="dialog">
+    <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-description">Description :
+                    <div>
+                        <textarea disabled class="form-control" id="desc" rows="4" maxlength="255" type="textarea"></textarea>
+                    </div>
+                    <div>
+                    <div class="modal-date">Date :
+                        <input class="form-control" id="modal-date" disabled type="datetime-local" value="" id="example-datetime-local-input">
+                    </div>
+                    <div class="modal-prices">
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr>
+                                <td class="normal">Normal</td>
+                                <td class="hot">Hot</td>
+                                <td class="sale">Sale</td>
+                            </tr>
+                            <tr>
+                                <td class="normal-value"></td>
+                                <td class="hot-value"></td>
+                                <td class="sale-value"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-prices"></div>
+                <div class="modal-created"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 @endif
 
 @if(!empty($add) && !empty($date) && !empty($pricesnames))

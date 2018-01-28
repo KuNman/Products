@@ -18,3 +18,4 @@ Route::get('/', function () {
 Route::any('/zadanie', 'ProductsController@createAllProductsView');
 Route::get('/zadanie/add', 'ProductsController@addNewProduct');
 Route::post('/zadanie/add', 'ProductsController@addItemToDB');
+Route::post('/zadanie/details', 'ProductsController@getDetails');

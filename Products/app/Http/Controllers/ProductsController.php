@@ -22,11 +22,9 @@ class ProductsController extends Controller
             return view('zadanie', ['names' => $names]);
 
         }
-
         return false;
-
-
     }
+
 
 //    get all products names or specified by id
     private static function getName($id = false) {
@@ -43,7 +41,6 @@ class ProductsController extends Controller
         if (is_int($id)) {
             echo 'int';
         }
-
         return false;
     }
 
@@ -151,5 +148,32 @@ class ProductsController extends Controller
         return falsse;
     }
 
+    public function getDetails() {
+
+        if (self::validateName($_POST["name"])) {
+            $description = DB::table('Products')->select('description')->where('name', $_POST["name"])->get();
+            $date = DB::table('Products')->select('created')->where('name', $_POST["name"])->get();
+
+            $id = DB::table('Products')->select('id')->where('name', $_POST["name"])->get();
+
+            if ($price_normal = DB::table('Pricelist')->select('price')->where('product_id', $id[0]->id)->where('price_name', 'normal')->first()) {
+                $price_normal = $price_normal->price;
+            }
+
+            if ($price_hot = DB::table('Pricelist')->select('price')->where('product_id', $id[0]->id)->where('price_name', 'hot')->first()) {
+                $price_hot = $price_hot->price;
+            }
+
+            if ($price_sale = DB::table('Pricelist')->select('price')->where('product_id', $id[0]->id)->where('price_name', 'sale')->first()) {
+                $price_sale = $price_sale->price;
+            }
+
+
+            if ($description && $date || $price_normal || $price_hot || $price_sale) {
+                return [$description, $date, $price_normal, $price_hot, $price_sale];
+            }
+            return 'error';
+        }
+    }
 
 }

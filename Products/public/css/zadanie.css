@@ -50,3 +50,8 @@
 .add.new .spacer {
     width: 2%;
 }
+
+.table.table-hover td {
+    max-width: 35px;
+    text-align: center;
+}
