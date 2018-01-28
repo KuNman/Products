@@ -168,9 +168,13 @@ class ProductsController extends Controller
                 $price_sale = $price_sale->price;
             }
 
+            if ($update = DB::table('Products')->select('modified')->where('name', $_POST["name"])->first()){
+                $update = $update->modified;
+            }
 
-            if ($description && $date || $price_normal || $price_hot || $price_sale) {
-                return [$description, $date, $price_normal, $price_hot, $price_sale];
+
+            if ($description && $date || $price_normal || $price_hot || $price_sale || $update) {
+                return [$description, $date, $price_normal, $price_hot, $price_sale, $update];
             }
             return 'error';
         }
@@ -183,7 +187,19 @@ class ProductsController extends Controller
                 return 'deleted';
             }
         }
+    }
 
+    public function updateProduct() {
+
+        if (self::validateName($_POST["name_old"]) &&
+            self::validateName($_POST["name"]) &&
+            self::validateDesc($_POST["description"])) {
+            if (DB::table('Products')->where('name', $_POST["name_old"])->update([
+                'name' => $_POST["name"], 'description' => $_POST["description"], 'modified' => Carbon::now()])) {
+                    return 'saved';
+            }
+            return 'error';
+        }
     }
 
 }

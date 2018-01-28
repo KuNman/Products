@@ -20,3 +20,4 @@ Route::get('/zadanie/add', 'ProductsController@addNewProduct');
 Route::post('/zadanie/add', 'ProductsController@addItemToDB');
 Route::post('/zadanie/details', 'ProductsController@getDetails');
 Route::post('/zadanie/delete', 'ProductsController@deleteProduct');
+Route::post('/zadanie/update', 'ProductsController@updateProduct');

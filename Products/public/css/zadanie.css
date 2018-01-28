@@ -55,9 +55,3 @@
     max-width: 35px;
     text-align: center;
 }
-
-ALTER TABLE Pricelist
-ADD product_id int(6) unsinged not null,
-                      FOREIGN KEY (product_id) REFERENCES Products (id)
-ON DELETE CASCADE
-ON UPDATE CASCADE;

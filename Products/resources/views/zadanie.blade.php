@@ -28,11 +28,15 @@
             <div class="modal-body">
                 <div class="modal-description">Description :
                     <div>
-                        <textarea disabled class="form-control" id="desc" rows="4" maxlength="255" type="textarea"></textarea>
+                        <textarea readonly class="form-control" id="desc" rows="4" maxlength="255" type="textarea"></textarea>
                     </div>
-                    <div>
+                </div>
+
                     <div class="modal-date">Date :
-                        <input class="form-control" id="modal-date" disabled type="datetime-local" value="" id="example-datetime-local-input">
+                        <input class="form-control" id="modal-date" readonly type="datetime-local" value="" id="example-datetime-local-input">
+                    </div>
+                    <div class="modal-date">Updated :
+                        <input class="form-control" id="modal-update" readonly type="datetime-local" value="" id="example-datetime-local-input">
                     </div>
                     <div class="modal-prices">
                         <table class="table table-hover">
@@ -53,8 +57,9 @@
                 </div>
                 <div class="modal-prices"></div>
                 <div class="modal-created"></div>
-            </div>
             <div class="modal-footer">
+                <p>Click name or desc to edit and then press Modify</p>
+                <button type="button" class="btn btn-warning">Modify product</button>
                 <button type="button" class="btn btn-danger">Delete product</button>
                 <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
             </div>

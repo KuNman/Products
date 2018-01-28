@@ -24,7 +24,6 @@ $('.list-group-item').click(function () {
             if(response[3] != null) {
                 var price_hot = response[3];
                 $('.hot-value').text(price_hot);
-
             }
             if(response[3] == null) {
                 $('.hot-value').text('');
@@ -35,6 +34,11 @@ $('.list-group-item').click(function () {
             }
             if(response[4] == null) {
                 $('.sale-value').text('');
+            }
+            if(response[5] != null) {
+                var updated = response[5];
+                var updated = updated.replace(/ /g, 'T');
+                $('#modal-update').val(updated);
             }
             if(response === 'error') {
                 alert ('error');
@@ -89,6 +93,49 @@ $('.modal-footer .btn-danger').click(function () {
         },
     });
 });
+
+$('.modal-header h4').click(function () {
+    $(this).after('<div class="new-name">New name : <input type="text"></div>');
+    $('.modal-footer .btn-success').click(function  (){
+        $('.modal-header .new-name').remove()
+    })
+});
+
+$('.modal-description textarea').click(function () {
+    $(this).attr('readonly', false);
+    $('.modal-footer .btn-success').click(function  (){
+        $('.modal-description textarea').attr('readonly', true);
+        })
+});
+
+$('.modal-footer .btn-success').click(function () {
+    $('#modal-update').val('');
+});
+
+$('.modal-footer .btn-warning').click(function () {
+
+    var name_old = $('.modal-title').text();
+    var name = $('.new-name input').val();
+    var desc = $('#desc').val();
+    var token_update =  $('#token').val();
+
+    $.ajax({
+        url: "/zadanie/update",
+        type: "post",
+        data : { name_old : name_old, name : name, description : desc, _token : token_update },
+        success: function (response) {
+            alert('connected');
+            if(response === 'error') {
+                alert ('error');
+            }
+            if(response === 'saved') {
+                alert ('saved');
+            }
+        },
+    });
+});
+
+
 
 $('.add.new .back').click(function () {
     window.location.href = "/zadanie";
