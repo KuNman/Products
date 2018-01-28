@@ -16,6 +16,7 @@
 
 .list-group-item:hover {
     background: darkgray;
+    color: white;
 }
 
 .add.new {
@@ -25,12 +26,27 @@
     justify-content: center;
 }
 
-.add.new .btn-success {
+.add.new button {
     display: flex;
-    justify-content: center;
-    flex: 0 0 20%;
-    max-width: 20%;
+    flex: 0 0 12%;
+    max-width: 12%;
     cursor:pointer;
+    justify-content: center;
 }
 
+.add_form {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 90%;
+    max-width: 90%;
+    cursor:pointer;
+    margin: 0 auto;
+}
 
+.add_form .form-group {
+    justify-content: center;
+}
+
+.add.new .spacer {
+    width: 2%;
+}

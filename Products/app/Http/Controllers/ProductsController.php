@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Collective\Html\FormBuilder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 
 class ProductsController extends Controller
 {
@@ -44,13 +49,107 @@ class ProductsController extends Controller
 
     public function addNewProduct() {
 
-        return view('zadanie', ['add' => true]);
+        $date = Carbon::now();
+        $year = $date->year;
+        $month = $date->month;
+        if($month < 10) {
+            $month = 0 . $month;
+        }
+        $day = $date->day;
+        if($day < 10) {
+            $day = 0 . $day;
+        }
+        $hour = $date->hour;
+        if($hour < 10) {
+            $hour = 0 . $hour;
+        }
+        $minutes = $date->minute;
+        if($minutes < 10) {
+            $minutes = 0 . $minutes;
+        }
+        $seconds = $date->second;
+        if($seconds < 10) {
+            $seconds = 0 . $seconds;
+        }
+        $dateValue = $year . '-' . $month . '-' . $day . 'T' . $hour . ':' . $minutes . ':' . $seconds;
+
+        $pricesNamesArray = self::getPricesNames();
+
+        if ($pricesNamesArray != null && $dateValue != null) {
+            return view('zadanie', ['add' => true, 'date' => $dateValue, 'pricesnames' => $pricesNamesArray]);
+        }
+
+        return false;
 
     }
 
-    private static function addToDB() {
+    private static function getPricesNames() {
 
-        return true;
+        if($prices_names = DB::table('Pricelist')->select('price_name')->distinct()->get()) {
+            foreach ($prices_names as $price_name) {
+                $pricesNamesArray[] = $price_name->price_name;
+            }
+            return $pricesNamesArray;
+        }
     }
+
+    public function addItemToDB() {
+
+        if(self::validateName($_POST["name"]) &&
+            self::validateDesc($_POST["description"]) &&
+            self::validatePrice($_POST["price"]) &&
+            self::validatePriceName($_POST["price_name"])) {
+
+            $insert_product = DB::table('Products')->insert(
+                ['name' => $_POST["name"], 'description' => $_POST["description"], 'created' => $_POST["date"]]
+            );
+
+            $id = DB::table('Products')->select('id')->orderBy('id', 'desc')->first();
+
+            $insert_price = DB::table('Pricelist')->insert(
+                ['price_name' => $_POST["price_name"], 'product_id' => $id->id, 'price' => $_POST["price"]]
+            );
+
+            if ($insert_product && $insert_price) {
+                return 'saved';
+            }
+        }
+        return 'missing data';
+    }
+
+    private static function validateName($name) {
+
+        if(strlen($name) >= 3 && strlen($name) <= 15) {
+            return true;
+        }
+        return false;
+    }
+
+    private static function validateDesc($desc) {
+
+        if(strlen($desc) <= 255) {
+            return true;
+        }
+        return false;
+    }
+
+    private static function validatePrice($price) {
+
+        $price = floatval($price);
+
+        if(is_numeric($price) && $price >= 0.01) {
+            return true;
+        }
+        return false;
+    }
+
+    private static function validatePriceName($price_name) {
+
+        if(strlen($price_name) >= 1 && strlen($price_name) <= 10) {
+            return true;
+        }
+        return falsse;
+    }
+
 
 }
