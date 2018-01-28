@@ -145,7 +145,7 @@ class ProductsController extends Controller
         if(strlen($price_name) >= 1 && strlen($price_name) <= 10) {
             return true;
         }
-        return falsse;
+        return false;
     }
 
     public function getDetails() {
@@ -174,6 +174,16 @@ class ProductsController extends Controller
             }
             return 'error';
         }
+    }
+
+    public function deleteProduct() {
+
+        if (self::validateName($_POST["name"])) {
+            if (DB::table('Products')->where('name', $_POST["name"])->delete()) {
+                return 'deleted';
+            }
+        }
+
     }
 
 }

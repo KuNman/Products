@@ -43,8 +43,6 @@ $('.list-group-item').click(function () {
     });
 });
 
-
-
 $('.add.new .btn-success').click(function () {
 
     var name = $('#name').val();
@@ -57,7 +55,7 @@ $('.add.new .btn-success').click(function () {
     $.ajax({
         url: "/zadanie/add",
         type: "post",
-        data : { name : name, description : desc , price : price , price_name : price_name, date : date, _token : token},
+        data : { name : name, description : desc , price : price , price_name : price_name, date : date, _token : token },
         success: function (response) {
            alert('connected');
            if(response === 'missing data') {
@@ -66,6 +64,28 @@ $('.add.new .btn-success').click(function () {
            if(response === 'saved') {
                alert ('saved');
            }
+        },
+    });
+});
+
+$('.modal-footer .btn-danger').click(function () {
+
+    var name = $('.modal-title').text();
+    var token_delete =  $('#token').val();
+
+    $.ajax({
+        url: "/zadanie/delete",
+        type: "post",
+        data : { name : name, _token : token_delete},
+        success: function (response) {
+            alert('connected');
+            if(response === 'error') {
+                alert ('eror');
+            }
+            if(response === 'deleted') {
+                alert ('deleted');
+                location.reload();
+            }
         },
     });
 });
